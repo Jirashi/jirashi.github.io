@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header .header-top {
+    background-color: #000000;
+}
+
+.header-top #header-logo {
+    margin: 10px 10px 5px 10px;
+    width: 120px;
+}
+
+.header .header-nav {
+    background-color: #000000;
+}
+
+body {
+    background-color: #ffffff;
+}
