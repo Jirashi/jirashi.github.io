@@ -1,0 +1,47 @@
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+body {
+    background-color: #eeeeee;
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    background-color: #00c3ff;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+}
+
+.tool-list {
+	display: flex;
+	flex-flow: row nowrap;
+	list-style: none;
+	padding: 0;
+	margin: 1rem;
+	overflow: hidden;
+}
+
+.tool--btn {
+    background-color: #eeeeee;
+	display: block;
+	border: none;
+	padding: .5rem;
+	font-size: 20px;
+    transition: 0.5s ease;
+}
+
+.tool--btn:hover {
+    background-color: #b1b1b1;
+}
+
+#output {
+    background-color: #ffffff;
+	height: 400px; 
+	margin: 1rem;
+	padding: 1rem;
+}

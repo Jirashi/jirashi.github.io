@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tech LUJO</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/projectLibrary/Notepad-Pro/Notepad-Pro.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="qrcode.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Notepad Pro</h1>
+        </header>
+        <main>
+            <div class="toolbar">
+                <ul class="tool-list">
+                    <li class="tool"><button type="button" data-command='justifyLeft'class="tool--btn"><i class=' fa fa-align-left'></i></button></li>
+                    <li class="tool"><button type="button" data-command='justifyCenter' class="tool--btn"><i class=' fa fa-align-center'></i></button></li>
+                    <li class="tool"><button type="button" data-command="bold" class="tool--btn"><i class=' fa fa-bold'></i></button></li>
+                    <li class="tool"><button type="button" data-command="italic"class="tool--btn"><i class=' fa fa-italic'></i></button></li>
+                    <li class="tool"><button type="button" data-command="underline"class="tool--btn"><i class=' fa fa-underline'></i></button></li>
+                    <li class="tool"><button type="button" data-command="insertOrderedList"class="tool--btn"><i class=' fa fa-list-ol'></i></button></li>
+                    <li class="tool"><button type="button" data-command="insertUnorderedList"class="tool--btn"><i class=' fa fa-list-ul'></i></button></li>
+                    <li class="tool"><button type="button" data-command="createlink" class="tool--btn"><i class=' fa fa-link'></i></button></li>
+                </ul>
+            </div>
+            
+            <div id="output" contenteditable="true"></div>
+        </main>
+        <script>
+            let output = document.getElementById('output');
+            let buttons = document.getElementsByClassName('tool--btn');
+            for (let btn of buttons) {
+                btn.addEventListener('click', () => {
+                    let cmd = btn.dataset['command'];
+                    if(cmd === 'createlink') {
+                        let url = prompt("Enter the link here: ", "http:\/\/");
+                        document.execCommand(cmd, false, url);
+                    } else {
+                        document.execCommand(cmd, false, null);
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>
