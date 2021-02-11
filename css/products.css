@@ -67,3 +67,10 @@ background-color: #e2e2e2;
     background-color: #ce0000;
     cursor: pointer;
 }
+
+.red-header1 {
+    background-color: #ff0000;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+}
