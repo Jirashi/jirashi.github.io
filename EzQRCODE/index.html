@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tech LUJO</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/EzQRCODE/css/EzQRCODE.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="qrcode.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1> Ez QRCODE</h1>
+        </header>
+        <main>
+            <div class="enterText">
+                <textarea id="qrText" placeholder="Enter URL/Text"></textarea>
+            </div>
+            <div class="qrEditor">
+                <div id="output"></div>
+                <hr>
+                <div class="qrSettings">
+                    <textarea id="colorDark" placeholder="Enter QR Color (HEX)" maxlength="7"></textarea>
+                    <textarea id="colorLight" placeholder="Enter BG Color (HEX)" maxlength="7"></textarea>
+                    <button id="qrConvert"><i class="fa fa-qrcode"></i> Convert</button>
+                    <a id="qrDownloadLink" download="filename">
+                        <button id="qrDownload"><i class="fa fa-download"></i> Download</button>
+                    </a>
+                    <h6>powered by <a href="https://davidshimjs.github.io/qrcodejs/" target="_blank" rel="noreferrer noopener">qrcode.js</a></h6>
+                </div>
+            </div>
+        </main>
+        <script>
+            const regex = /^#[0-9A-F]{6}$/i;
+            
+            var qrcode = new QRCode("output", {
+                text: "default",
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('qrConvert').addEventListener('click', ()=>{
+                var input = document.getElementById('qrText').value;
+                if (input) {
+                    colorInput1 = document.getElementById('colorDark').value;
+                    colorInput2 = document.getElementById('colorLight').value;
+                    if (regex.exec(colorInput1)) {
+                        qrcode._htOption.colorDark = colorInput1;
+                        if (regex.exec(colorInput2)) {
+                            qrcode._htOption.colorLight = colorInput2;
+                        }
+                    } else if (regex.exec(colorInput2)) {
+                        qrcode._htOption.colorLight = colorInput2;
+                    }
+                    qrcode.clear();
+                    qrcode.makeCode(input); 
+                }
+            })
+
+            document.getElementById('qrDownload').addEventListener('click', function() {
+                var qrFile = document.getElementById('output').childNodes[1].src;
+                if (qrFile) {
+                    window.open(qrFile);
+                }
+            });
+        </script>
+    </body>
+</html>
