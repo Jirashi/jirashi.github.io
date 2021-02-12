@@ -110,14 +110,25 @@ function slctAll() {
 
 function ZoomIn() {
     let fontSize = output.style.fontSize;
-    console.log(output.style)
-    if (fontSize >= 50) {
-        fontSize = "10px";
+    var truFontSize = fontSize.slice(0, fontSize.length - 2)
+    console.log(truFontSize)
+    if (truFontSize >= 50) {
+        output.style.fontSize = "18px";
     } else {
-        output.style.fontSize += 2;
+        output.style.fontSize = `${(truFontSize + 2)}px`;
     }
 }
 
+function ZoomOut() {
+    let fontSize = output.style.fontSize;
+    var truFontSize = fontSize.slice(0, fontSize.length - 2)
+    console.log(truFontSize)
+    if (truFontSize >= 10) {
+        output.style.fontSize = "18px";
+    } else {
+        output.style.fontSize = `${(truFontSize - 2)}px`;
+    }
+}
 
 fileName.addEventListener('change', function() {
     if (fileName.value) {
