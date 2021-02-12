@@ -44,8 +44,8 @@
                         <div class="dropdown">
                             <button>Settings <i class='fa fa-caret-down'></i></button>
                             <div class="dropdown-content">
-                                <button class="tool" id="set-zoomin-btn" onclick="ZoomIn()"><i class="fa fa-plus-circle"></i> Zoom In</button>
-                                <button class="tool" id="set-zoomout-btn" onclick="ZoomOut()"><i class="fa fa-minus-circle"></i> Zoom Out</button><hr>
+                                <button class="tool" id="set-zoomin-btn" onclick="Zoom(true)"><i class="fa fa-plus-circle"></i> Zoom In</button>
+                                <button class="tool" id="set-zoomout-btn" onclick="Zoom(false)"><i class="fa fa-minus-circle"></i> Zoom Out</button><hr>
                                 <button class="tool" id="set-theme-btn" onclick="Theme()"><i class="fa fa-paint-brush"></i> Theme</button>
                                 <button class="tool" id="set-settings-btn" onclick="Settings()"><i class="fa fa-wrench"></i> Settings</button>
                             </div>
@@ -72,8 +72,8 @@
                     <li class="tool"><button id="edit-redo-btn" onclick="Redo()"><i class="fa fa-repeat"></i></button></li>
                     <li class="tool"><button id="edit-copy-btn" onclick="Copy()"><i class="fa fa-copy"></i></button></li>
                     <li class="tool"><button id="edit-paste-btn" onclick="Paste()"><i class="fa fa-paste"></i></button></li>
-                    <li class="tool"><button id="set-zoomin-btn" onclick="ZoomIn()"><i class="fa fa-plus-circle"></i></button></li>
-                    <li class="tool"><button id="set-zoomout-btn" onclick="ZoomOut()"><i class="fa fa-minus-circle"></i></button></li>
+                    <li class="tool"><button id="set-zoomin-btn" onclick="Zoom(true)"><i class="fa fa-plus-circle"></i></button></li>
+                    <li class="tool"><button id="set-zoomout-btn" onclick="Zoom(false)"><i class="fa fa-minus-circle"></i></button></li>
                     <li class="tool"><a href="/projects/Notepad-Pro/help.html"><button><i class="fa fa-question-circle"></i></button></a></li>
                 </ul>
             </div>

@@ -1,27 +1,8 @@
 let output = document.getElementById('output');
 let fileName = document.getElementById('file-name');
+let fileUpload = document.getElementById('file-upload');
 var undone = [];
 var copiedText = "";
-// buttons
-let fileNew = document.getElementById('file-new-btn');
-let fileOpen = document.getElementById('file-open-btn');
-let fileSave = document.getElementById('file-save-btn');
-let fileSaveAs = document.getElementById('file-saveas-btn');
-let fileEmail = document.getElementById('file-email-btn');
-
-let editUndo = document.getElementById('edit-undo-btn');
-let editRedo = document.getElementById('edit-redo-btn');
-let editCopy = document.getElementById('edit-copy-btn');
-let editPaste = document.getElementById('edit-paste-btn');
-let editCut = document.getElementById('edit-cut-btn');
-let editClear = document.getElementById('edit-clear-btn');
-let editSelectAll = document.getElementById('edit-slctall-btn');
-
-let setZoomIn = document.getElementById('set-zoomin-btn');
-let setZoomOut = document.getElementById('set-zoomout-btn');
-let setTheme = document.getElementById('set-theme-btn');
-let setSettings = document.getElementById('set-settings-btn');
-let fileUpload = document.getElementById('file-upload');
 
 function newFile() {
     if (confirm("New file? All current text will be deleted.")) {
@@ -65,7 +46,8 @@ function saveFile() {
 }
 
 function saveFileAs () {
-    if (prompt("Save As:", fileName.value)) {saveFile();}
+    fileName.value = prompt("Save As:", fileName.value)
+    if (fileName.value) {saveFile();}
 }
 
 function Undo() {
@@ -92,12 +74,16 @@ function Copy() {
 }
 
 function Clear() {
-    output = "";
+    if (output.value.length > 0) {
+        if (confirm("Are you sure? All current text will be deleted.")) {
+            output.value = "";
+        }
+    }
 }
 
 function Cut() {
     Copy()
-    Clear()
+    output.value = "";
 }
 
 function Paste() {
@@ -108,26 +94,23 @@ function slctAll() {
     output.select();
 }
 
-function ZoomIn() {
+function Zoom(inout) {
     let fontSize = output.style.fontSize;
-    var truFontSize = fontSize.slice(0, fontSize.length - 2)
-    console.log(truFontSize)
-    if (truFontSize >= 50) {
+    var truFontSize = parseInt(fontSize.slice(0, fontSize.length - 2))
+    if (inout) {var ZoomAmnt = 2;} else {var ZoomAmnt = -2;}
+    if (truFontSize >= 50 || truFontSize < 10) {
         output.style.fontSize = "18px";
     } else {
-        output.style.fontSize = `${(truFontSize + 2)}px`;
+        output.style.fontSize = `${(truFontSize + ZoomAmnt)}px`;
     }
 }
 
-function ZoomOut() {
-    let fontSize = output.style.fontSize;
-    var truFontSize = fontSize.slice(0, fontSize.length - 2)
-    console.log(truFontSize)
-    if (truFontSize >= 10) {
-        output.style.fontSize = "18px";
-    } else {
-        output.style.fontSize = `${(truFontSize - 2)}px`;
-    }
+function Theme() {
+    document.body.classList.toggle('dark-theme');
+}
+
+function Settings() {
+    alert("Whoops! You've found a feature that hasn't yet been implemented, check back later.")
 }
 
 fileName.addEventListener('change', function() {
@@ -138,10 +121,6 @@ fileName.addEventListener('change', function() {
     } else {
         fileName.value = 'Untitled.txt'
     }
-});
-
-document.getElementById('set-theme-btn').addEventListener('click', function() {
-    document.body.classList.toggle('dark-theme');  
 });
 
 fileUpload.addEventListener('change', function() {
