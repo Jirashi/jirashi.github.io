@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Notepad Pro</title>
+        <title>Textacular</title>
         <link rel="stylesheet" href="/css/styles.css">
-        <link rel="stylesheet" href="/projects/Notepad-Pro/Notepad-Pro.css">
+        <link rel="stylesheet" href="/projects/Textacular/Textacular.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <header>
-            <h1><i class=" fa fa-pencil-square"></i> Notepad Pro <textarea id="file-name">Untitled.txt</textarea></h1> 
+            <h1><i class=" fa fa-pencil-square"></i> Textacular <textarea id="file-name">Untitled.txt</textarea></h1> 
         </header>
         <main>
             <div class="topbar">
@@ -72,13 +72,14 @@
                     <li class="tool"><button id="edit-redo-btn" onclick="Redo()"><i class="fa fa-repeat"></i></button></li>
                     <li class="tool"><button id="edit-copy-btn" onclick="Copy()"><i class="fa fa-copy"></i></button></li>
                     <li class="tool"><button id="edit-paste-btn" onclick="Paste()"><i class="fa fa-paste"></i></button></li>
-                    <li class="tool"><button id="set-zoomin-btn" onclick="Zoom(true)"><i class="fa fa-plus-circle"></i></button></li>
                     <li class="tool"><button id="set-zoomout-btn" onclick="Zoom(false)"><i class="fa fa-minus-circle"></i></button></li>
+                    <li class="tool"><button id="set-zoom-btn" onclick="setZoom()">18px</button></li>
+                    <li class="tool"><button id="set-zoomin-btn" onclick="Zoom(true)"><i class="fa fa-plus-circle"></i></button></li>
                     <li class="tool"><a href="/projects/Notepad-Pro/help.html"><button><i class="fa fa-question-circle"></i></button></a></li>
                 </ul>
             </div>
             <textarea id="output" style="font-size: 18px;"></textarea>
         </main>
-        <script src="/projects/Notepad-Pro/Notepad-Pro.js"></script>
+        <script src="/projects/Textacular/Textacular.js"></script>
     </body>
 </html>

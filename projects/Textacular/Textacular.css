@@ -31,7 +31,7 @@ header h1 {
     background-color: #eeeeee;
 	display: block;
 	border: none;
-	padding: .5rem;
+	padding: 8px;
 	font-size: 20px;
     transition: 0.5s ease;
 }
@@ -45,13 +45,13 @@ header h1 {
 	border: none;
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
-	height: 400px;
+	height: 800px;
 	width: 98%;
 	margin: 5px 16px;
 	padding: 1rem;
 	outline: none;
 	resize: none;
-	transition: 2s ease;
+	transition: background-color 2s ease;
 }
 
 #file-name {
@@ -64,6 +64,7 @@ header h1 {
 	width: 300px;
 	margin: 0;
 	padding: 10px;
+	vertical-align: -10px;
 	resize: none;
 	outline: none;
 	text-decoration: none;
@@ -72,6 +73,14 @@ header h1 {
 
 #file-name:focus {
 	color: #000000;
+}
+
+#set-zoom-btn {
+	background-color: #ffffff;
+	border: 1px solid #c4c4c4;
+	font-size: 18px;
+	padding: 8px 4px;
+	
 }
 
 .topbar-list {
@@ -115,7 +124,6 @@ header h1 {
 .dropdown-content a {
 	text-decoration: none;
 }
-
 
 .dropdown-content hr {
 	border: 0.5px solid #e0e0e0;
@@ -176,4 +184,9 @@ body.dark-theme .dropdown-content hr {
 
 body.dark-theme .dropdown-content button:hover {
 	background-color: #313131;
+}
+
+body.dark-theme #set-zoom-btn {
+	background-color: #1d1d1d;
+	border: 1px solid #141414;
 }

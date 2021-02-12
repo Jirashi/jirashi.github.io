@@ -1,6 +1,7 @@
 let output = document.getElementById('output');
 let fileName = document.getElementById('file-name');
 let fileUpload = document.getElementById('file-upload');
+let zoomAmnt = document.getElementById('set-zoom-btn');
 var undone = [];
 var copiedText = "";
 
@@ -98,10 +99,21 @@ function Zoom(inout) {
     let fontSize = output.style.fontSize;
     var truFontSize = parseInt(fontSize.slice(0, fontSize.length - 2))
     if (inout) {var ZoomAmnt = 2;} else {var ZoomAmnt = -2;}
-    if (truFontSize >= 50 || truFontSize < 10) {
+    if (truFontSize >= 32 || 6 > truFontSize) {
         output.style.fontSize = "18px";
+        zoomAmnt.innerHTML = "18px"
     } else {
         output.style.fontSize = `${(truFontSize + ZoomAmnt)}px`;
+        zoomAmnt.innerHTML = `${(truFontSize + ZoomAmnt)}px`;
+    }
+}
+
+function setZoom() {
+    var amnt = prompt("Choose size:", "6-32")
+    if (amnt > 5 && amnt < 33) {
+        amnt = `${amnt}px`;
+        output.style.fontSize = amnt;
+        zoomAmnt.innerHTML = amnt;
     }
 }
 
@@ -131,6 +143,6 @@ fileUpload.addEventListener('change', function() {
         reader.onload = function(e) {
             output.value = e.target.result;
         };
+        fileName.value = file.name;
     }
-    fileName.value = file.name;
 });
