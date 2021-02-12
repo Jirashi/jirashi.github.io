@@ -8,13 +8,14 @@ body {
     background-color: #eeeeee;
     margin: 0;
     padding: 0;
+	transition: 2s ease;
 }
 
 header h1 {
     background-color: #00c3ff;
     color: #ffffff;
-    text-align: center;
     padding: 10px;
+	transition: 2s ease;
 }
 
 .tool-list {
@@ -26,7 +27,7 @@ header h1 {
 	overflow: hidden;
 }
 
-.tool--btn {
+.tool button {
     background-color: #eeeeee;
 	display: block;
 	border: none;
@@ -35,13 +36,58 @@ header h1 {
     transition: 0.5s ease;
 }
 
-.tool--btn:hover {
+.tool button:hover {
     background-color: #b1b1b1;
 }
 
 #output {
     background-color: #ffffff;
-	height: 400px; 
+	height: 400px;
 	margin: 1rem;
 	padding: 1rem;
+	outline: none;
+	transition: 2s ease;
+}
+
+#fileName {
+    background-color: #ffffff;
+	color: #adadad;
+	border: none;
+	font-size: 18px;
+	font-family: 'Roboto', sans-serif;
+	height: 40px;
+	width: 300px;
+	margin: 0;
+	padding: 10px;
+	resize: none;
+	outline: none;
+	text-decoration: none;
+	overflow: hidden;
+}
+
+#fileName:focus {
+	color: #000000;
+}
+
+body.dark-theme {
+    background-color: #1d1d1d;
+}
+
+body.dark-theme #output {
+    background-color: #222222;
+	color: #eeeeee;
+}
+
+body.dark-theme header h1 {
+    background-color: #474747;
+}
+
+body.dark-theme .tool button {
+    background-color: #222222;
+	color: #eeeeee;
+}
+
+body.dark-theme .tool button:hover {
+    background-color: #313131;
+	color: #eeeeee;
 }

@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Tech LUJO</title>
+        <title>Notepad Pro</title>
         <link rel="stylesheet" href="/css/styles.css">
         <link rel="stylesheet" href="/projectLibrary/Notepad-Pro/Notepad-Pro.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="qrcode.js"></script>
     </head>
     <body>
         <header>
-            <h1>Notepad Pro</h1>
+            <h1><i class=" fa fa-pencil-square"></i> Notepad Pro <textarea id="fileName"></textarea></h1> 
         </header>
         <main>
             <div class="toolbar">
                 <ul class="tool-list">
+                    <li class="tool"><button type="button" id="file--btn"><i class=' fa fa-floppy-o'></i></button></li>
+                    <li class="tool"><button type="button" id="email--btn"><i class=' fa fa-envelope-o'></i></button></li>
+                    <li class="tool"><button type="button" id="theme--btn"><i class=' fa fa-paint-brush'></i></button></li>
                     <li class="tool"><button type="button" data-command='justifyLeft'class="tool--btn"><i class=' fa fa-align-left'></i></button></li>
                     <li class="tool"><button type="button" data-command='justifyCenter' class="tool--btn"><i class=' fa fa-align-center'></i></button></li>
                     <li class="tool"><button type="button" data-command="bold" class="tool--btn"><i class=' fa fa-bold'></i></button></li>
@@ -29,7 +31,59 @@
         </main>
         <script>
             let output = document.getElementById('output');
+            let fileName = document.getElementById('fileName');
             let buttons = document.getElementsByClassName('tool--btn');
+
+            function saveTextAsFile() {
+                var textToWrite = output.innerText;
+                var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
+                var fileNameToSaveAs = `${fileName.value}`;
+
+                var downloadLink = document.createElement("a");
+                downloadLink.download = fileNameToSaveAs;
+                downloadLink.innerHTML = "Download File";
+                if (window.webkitURL != null) {
+                    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+                } else {
+                    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                    downloadLink.onclick = destroyClickedElement;
+                    downloadLink.style.display = "none";
+                    document.body.appendChild(downloadLink);
+                }
+
+                downloadLink.click();
+                }
+                
+                function destroyClickedElement(event) {
+                document.body.removeChild(event.target);
+            }
+
+            document.getElementById('file--btn').addEventListener('click', saveTextAsFile);
+
+            document.getElementById('email--btn').addEventListener('click', function() {
+                var subject = fileName.value.slice(0, fileName.value.length - 4);
+                var message = output.innerText;
+                var email = prompt("Enter a valid E-Mail", "abc@example.com");
+
+                if (email) {
+                    window.location.href = `mailto:${email}?subject=${subject}&body=${message}`;
+                }
+            });
+
+            fileName.addEventListener('change', function() {
+                if (fileName.value) {
+                    if (!fileName.value.endsWith('.txt')) {
+                        fileName.value += '.txt';
+                    }
+                } else {
+                    fileName.value = 'Untitled.txt'
+                }
+            });
+
+            document.getElementById('theme--btn').addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');  
+            });
+
             for (let btn of buttons) {
                 btn.addEventListener('click', () => {
                     let cmd = btn.dataset['command'];
