@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Notepad Pro</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/projects/Notepad-Pro/Notepad-Pro.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <header>
+            <h1><i class=" fa fa-pencil-square"></i> Notepad Pro <textarea id="file-name">Untitled.txt</textarea></h1> 
+        </header>
+        <main>
+            <div class="topbar">
+                <ul class="topbar-list">
+                    <li>
+                        <div class="dropdown">
+                            <button>File <i class='fa fa-caret-down'></i></button>
+                            <div class="dropdown-content">
+                                <button class="tool" id="file-new-btn" onclick="newFile()"><i class="fa fa-file-text-o"></i> New</button>
+                                <button class="tool" id="file-open-btn" onclick="openFile()"><i class="fa fa-folder-open-o"></i> Open</button>
+                                <input type="file" id="file-upload" accept="text/plain" hidden/>
+                                <button class="tool" id="file-save-btn" onclick="saveFile()"><i class="fa fa-save"></i> Save</button>
+                                <button class="tool" id="file-saveas-btn" onclick="saveFileAs()"><i class="fa fa-save"></i> Save As...</button>
+                                <button class="tool" id="file-email-btn" onclick="emailFile()"><i class="fa fa-envelope-o"></i> Email</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button>Edit <i class='fa fa-caret-down'></i></button>
+                            <div class="dropdown-content">
+                                <button class="tool" id="edit-undo-btn" onclick="Undo()"><i class="fa fa-undo"></i> Undo</button>
+                                <button class="tool" id="edit-redo-btn" onclick="Redo()"><i class="fa fa-repeat"></i> Redo</button><hr>
+                                <button class="tool" id="edit-copy-btn" onclick="Copy()"><i class="fa fa-copy"></i> Copy</button>
+                                <button class="tool" id="edit-paste-btn" onclick="Paste()"><i class="fa fa-paste"></i> Paste</button>
+                                <button class="tool" id="edit-cut-btn" onclick="Cut()"><i class="fa fa-cut"></i> Cut</button><hr>
+                                <button class="tool" id="edit-clear-btn" onclick="Clear()"><i class="fa fa-trash-o"></i> Clear All</button>
+                                <button class="tool" id="edit-slctall-btn" onclick="slctAll()"><i class="fa fa-object-group"></i> Select All</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button>Settings <i class='fa fa-caret-down'></i></button>
+                            <div class="dropdown-content">
+                                <button class="tool" id="set-zoomin-btn" onclick="ZoomIn()"><i class="fa fa-plus-circle"></i> Zoom In</button>
+                                <button class="tool" id="set-zoomout-btn" onclick="ZoomOut()"><i class="fa fa-minus-circle"></i> Zoom Out</button><hr>
+                                <button class="tool" id="set-theme-btn" onclick="Theme()"><i class="fa fa-paint-brush"></i> Theme</button>
+                                <button class="tool" id="set-settings-btn" onclick="Settings()"><i class="fa fa-wrench"></i> Settings</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button>Help <i class='fa fa-caret-down'></i></button>
+                            <div class="dropdown-content">
+                                <a href="/projects/Notepad-Pro/help.html"><button><i class="fa fa-question-circle"></i> Help</button></a>
+                                <a href="mailto:techlujo@gmail.com&subject=Feedback on Notepad Pro&body= Thanks for using our free tool Notepad Pro, please send us your feedback:">
+                                    <button><i class="fa fa-comment-o"></i> Feedback</button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="toolbar">
+                <ul class="tool-list">
+                    <li class="tool"><button id="file-save-btn" onclick="saveFile()"><i class="fa fa-save"></i></button></li>
+                    <li class="tool"><button id="file-open-btn" onclick="openFile()"><i class="fa fa-folder-open-o"></i></button></li>
+                    <li class="tool"><button id="edit-undo-btn" onclick="Undo()"><i class="fa fa-undo"></i></button></li>
+                    <li class="tool"><button id="edit-redo-btn" onclick="Redo()"><i class="fa fa-repeat"></i></button></li>
+                    <li class="tool"><button id="edit-copy-btn" onclick="Copy()"><i class="fa fa-copy"></i></button></li>
+                    <li class="tool"><button id="edit-paste-btn" onclick="Paste()"><i class="fa fa-paste"></i></button></li>
+                    <li class="tool"><button id="set-zoomin-btn" onclick="ZoomIn()"><i class="fa fa-plus-circle"></i></button></li>
+                    <li class="tool"><button id="set-zoomout-btn" onclick="ZoomOut()"><i class="fa fa-minus-circle"></i></button></li>
+                    <li class="tool"><a href="/projects/Notepad-Pro/help.html"><button><i class="fa fa-question-circle"></i></button></a></li>
+                </ul>
+            </div>
+            <textarea id="output"></textarea>
+        </main>
+        <script src="/projects/Notepad-Pro/Notepad-Pro.js"></script>
+    </body>
+</html>
