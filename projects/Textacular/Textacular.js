@@ -2,13 +2,17 @@ let output = document.getElementById('output');
 let fileName = document.getElementById('file-name');
 let fileUpload = document.getElementById('file-upload');
 let zoomAmnt = document.getElementById('set-zoom-btn');
+
+let editors = document.getElementById('editors');
+let htmlViewer = document.getElementById('html-viewer');
+
 var undone = [];
 var copiedText = "";
 
 function newFile() {
     if (confirm("New file? All current text will be deleted.")) {
         output.innerHTML = "";
-        fileName.value = "Untitled.txt";
+        fileName.value = `Untitled.${editors.className}`;
     }
 }
 
@@ -21,13 +25,19 @@ function emailFile() {
     if (email) {
         window.location.href = `
         mailto:${email}
-        ?subject=${fileName.value.slice(0, fileName.value.length - 4)}
+        ?subject=${fileName.value}
         &body=${output.value}`;
     }
 }
 
 function saveFile() {
-    var file = new Blob([ output.value ], { type: 'text/plain' });
+    var fileType = "text/plain";
+    if (editors.className == "txt") {
+        fileType = "text/plain";
+    } else if (editors.className == "html") {
+        fileType = "text/html";
+    }
+    var file = new Blob([ output.value ], { type: fileType });
     var filename = fileName.value;
 
     if (window.navigator.msSaveOrOpenBlob) // IE10+
@@ -121,17 +131,21 @@ function Theme() {
     document.body.classList.toggle('dark-theme');
 }
 
+function Type(type) {
+    editors.classList.replace(editors.classList[0], type);
+}
+
 function Settings() {
     alert("Whoops! You've found a feature that hasn't yet been implemented, check back later.")
 }
 
 fileName.addEventListener('change', function() {
     if (fileName.value) {
-        if (!fileName.value.endsWith('.txt')) {
-            fileName.value += '.txt';
+        if (!fileName.value.endsWith(`.${editors.className}`)) {
+            fileName.value += `.${editors.className}`;
         }
     } else {
-        fileName.value = 'Untitled.txt'
+        fileName.value = `Untitled.${editors.className}`
     }
 });
 
@@ -143,6 +157,13 @@ fileUpload.addEventListener('change', function() {
         reader.onload = function(e) {
             output.value = e.target.result;
         };
+        console.log(file.type);
         fileName.value = file.name;
+    }
+});
+
+output.addEventListener('change', function() {
+    if (editors.className == "html") {
+        document.getElementById('html-content').innerHTML = output.value;
     }
 });

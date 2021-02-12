@@ -42,7 +42,7 @@ header h1 {
 
 #output {
     background-color: #ffffff;
-	border: none;
+	border: 1px solid #c4c4c4;
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
 	height: 800px;
@@ -144,6 +144,7 @@ body.dark-theme {
 body.dark-theme #output {
     background-color: #222222;
 	color: #eeeeee;
+	border: 1px solid #141414;
 }
 
 body.dark-theme header h1 {
@@ -189,4 +190,58 @@ body.dark-theme .dropdown-content button:hover {
 body.dark-theme #set-zoom-btn {
 	background-color: #1d1d1d;
 	border: 1px solid #141414;
+}
+
+#editors.html {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#editors.html #output {
+	width: 50%;
+	margin: 5px 5px 5px 10px;
+}
+
+#editors.html #html-viewer {
+	display: block;
+	margin: 5px 10px 5px 5px;
+}
+
+#html-viewer {
+	display: none;
+    background-color: #ffffff;
+	border: 1px solid #c4c4c4;
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	height: 800px;
+	width: 50%;
+	margin: 5px 16px;
+	padding: 0;
+	outline: none;
+	resize: none;
+	transition: background-color 2s ease;
+}
+
+#html-viewer #banner {
+	background-color: #c4c4c4;
+    color: #ffffff;
+	text-align: center;
+	padding: 5px 0;
+}
+
+#html-viewer #html-content {
+	overflow: scroll;
+	height: 93.28%;
+	font-family: serif;
+}
+
+body.dark-theme #html-viewer {
+	background-color: #222222;
+	color: #eeeeee;
+	border: 1px solid #141414;
+}
+
+body.dark-theme #html-viewer #banner {
+	background-color: #141414;
+    color: #eeeeee;
 }

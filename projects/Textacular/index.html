@@ -62,6 +62,15 @@
                             </div>
                         </div>
                     </li>
+                    <li>
+                        <div class="dropdown">
+                            <button>View <i class='fa fa-caret-down'></i></button>
+                            <div class="dropdown-content">
+                                <button class="tool" id="set-zoomin-btn" onclick="Type('text')"><i class="fa fa-font"></i> Text</button>
+                                <button class="tool" id="set-zoomout-btn" onclick="Type('html')"><i class="fa fa-code"></i> HTML</button><hr>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="toolbar">
@@ -78,7 +87,13 @@
                     <li class="tool"><a href="/projects/Notepad-Pro/help.html"><button><i class="fa fa-question-circle"></i></button></a></li>
                 </ul>
             </div>
-            <textarea id="output" style="font-size: 18px;"></textarea>
+            <div id="editors" class="txt">
+                <textarea id="output" style="font-size: 18px;"></textarea>
+                <div id="html-viewer">
+                    <h1 id="banner">HTML Output</h1>
+                    <div id="html-content"></div>
+                </div>
+            </div>
         </main>
         <script src="/projects/Textacular/Textacular.js"></script>
     </body>
