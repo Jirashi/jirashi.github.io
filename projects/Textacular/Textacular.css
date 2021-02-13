@@ -5,21 +5,17 @@
 }
 
 body {
-    background-color: #eeeeee;
     margin: 0;
     padding: 0;
 	transition: 2s ease;
 }
 /* top header */
 header h1 {
-    background-color: #00c3ff;
-    color: #ffffff;
     padding: 10px;
 	transition: 2s ease;
 }
 
 footer {
-	background-color: #eeeeee;
     position: fixed; 
     bottom: 0;
     left: 0;
@@ -29,11 +25,9 @@ footer {
 }
 
 #file-name {
-    background-color: #ffffff;
-	color: #adadad;
 	border: none;
 	font-size: 18px;
-	font-family: 'Roboto', sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	height: 40px;
 	width: 300px;
 	margin: 0;
@@ -44,11 +38,9 @@ footer {
 	text-decoration: none;
 	overflow: hidden;
 }
-#file-name:focus {color: #000000;}
 
 /* topbar */
 .topbar-list {
-	background-color: #ffffff;
 	display: flex;
 	flex-flow: row nowrap;
 	list-style: none;
@@ -58,7 +50,6 @@ footer {
 }
 
 .topbar-list button {
-	background-color: #ffffff;
 	display: block;
 	border: none;
 	padding: 10px;
@@ -68,7 +59,6 @@ footer {
 
 .dropdown-content {
 	display: none;
-	background-color: #f9f9f9;
 	box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.1);
 	min-width: 160px;
 	position: absolute;
@@ -78,15 +68,12 @@ footer {
 
 .dropdown-content button {
 	display: block;
-	background-color: #ffffff;
-	color: black;
 	text-align: left;
 	min-width: 160px;
 	padding: 8px 16px;
 }
+
 .dropdown-content a {text-decoration: none;}
-.dropdown-content hr {border: 0.5px solid #e0e0e0;}
-.dropdown-content button:hover {background-color: #f1f1f1;}
 .dropdown:hover .dropdown-content {display: block;}
 
 /* tool bar */
@@ -100,7 +87,6 @@ footer {
 }
 
 .toolbar .tool button {
-    background-color: #eeeeee;
 	display: block;
 	border: none;
 	padding: 8px;
@@ -108,14 +94,12 @@ footer {
     transition: 0.5s ease;
 	outline: none;
 }
-.toolbar .tool button:hover {background-color: #b1b1b1;}
 
 /* editor */
 #editor {
-    background-color: #ffffff;
-	border: 1px solid #c4c4c4;
-	font-family: 'Roboto', sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 18px;
+	font-weight: 400;
 	height: 800px;
 	width: 100%;
 	margin: 0;
@@ -126,9 +110,7 @@ footer {
 }
 
 #output {
-	display: none;
     background-color: #ffffff;
-	border: 1px solid #c4c4c4;
 	font-family: serif;
 	font-size: 18px;
 	height: 800px;
@@ -137,13 +119,15 @@ footer {
 	padding: 0;
 	overflow: auto;
 	transition: background-color 2s ease;
+	display: none;
 }
 
 /* editor/html */
 #container.html #editor {
-	display: inline-block;
+	font-family: 'Courier New', Courier, monospace;
 	width: 50%;
 	margin: 0;
+	display: inline-block;
 }
 
 #container.html #output {
@@ -152,8 +136,6 @@ footer {
 }
 
 #set-zoom-btn {
-	background-color: #ffffff;
-	border: 1px solid #c4c4c4;
 	font-size: 18px;
 	padding: 8px 4px;
 }
@@ -174,33 +156,33 @@ footer {
 }
   
 .menu-content {
-	background-color: #fefefe;
 	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%;
-}
-
-#theme-menu h1, h6 {
-	text-align: center;
-	background-color: #00c3ff;
-    color: #ffffff;
-    padding: 10px 0 0 0;
-	transition: 2s ease;
-}
-
-#theme-menu h6 {
-	font-weight: normal;
-	padding: 0 0 5px 0;
-}
-
-#theme-menu .menu-content {
 	width: 50%;
 	padding: 0;
 }
 
-#theme {
-	background-color: #eeeeee;
+.menu-content h1, h6 {
+	text-align: center;
+    padding: 10px 0 0 0;
+	transition: 2s ease;
+}
+
+.menu-content h6 {
+	font-weight: normal;
+	padding: 0 0 5px 0;
+}
+
+.menu-content h3 {
+	font-weight: normal;
+	margin: 10px 10px 0 10px;
+}
+
+.menu-content h4 {
+	font-weight: normal;
+	margin: 5px 10px;
+}
+
+.options {
 	border: none;
 	margin: 10px;
 	padding: 5px;
@@ -208,80 +190,22 @@ footer {
 	transition: 2s ease;
 }
 
-/* dark theme */
-body.dark-theme {background-color: #1d1d1d;}
-body.dark-theme header h1 {background-color: #141414;}
+.menu-content textarea {
+	resize: none;
+	padding: 2px;
+	height: 25px;
+	margin: 0 10px;
+}
 
-body.dark-theme .topbar-list {background-color: #1a1a1a;}
-body.dark-theme .topbar-list button {background-color: #1a1a1a; color: #eeeeee;}
-body.dark-theme .dropdown-content {background-color: #222222;}
-body.dark-theme .dropdown-content button {background-color: #222222; color: #eeeeee;}
-body.dark-theme .dropdown-content hr {border: 0.5px solid #141414;}
-body.dark-theme .dropdown-content button:hover {background-color: #313131;}
-
-body.dark-theme .tool button {background-color: #222222; color: #eeeeee;}
-body.dark-theme .tool button:hover {background-color: #313131; color: #eeeeee;}
-body.dark-theme #set-zoom-btn {background-color: #1d1d1d; border: 1px solid #141414;}
-
-body.dark-theme #editor {background-color: #222222; color: #eeeeee; border: 1px solid #141414;}
-body.dark-theme #output {border: 1px solid #141414;}
-
-body.dark-theme .menu-content {background-color: #1a1a1a; border: 1px solid #141414;}
-body.dark-theme #theme-menu h1 {background-color: #141414}
-body.dark-theme #theme-menu h6 {background-color: #141414}
-body.dark-theme #theme {background-color: #1d1d1d; color: #eeeeee;}
-
-body.dark-theme footer {background-color: #141414; color: #eeeeee;}
-
-/* dracula */
-body.dracula {background-color: #282a36;}
-body.dracula header h1 {background-color: #22242e;}
-
-body.dracula .topbar-list {background-color: #22242e;}
-body.dracula .topbar-list button {background-color: #22242e; color: #f8f8f2;}
-body.dracula .dropdown-content {background-color: #44475a;}
-body.dracula .dropdown-content button {background-color: #282a36; color: #f8f8f2;}
-body.dracula .dropdown-content hr {border: 0.5px solid #22242e;}
-body.dracula .dropdown-content button:hover {background-color: #2f303a;}
-
-body.dracula .tool button {background-color: #282a36; color: #f8f8f2;}
-body.dracula .tool button:hover {background-color: #2f303a; color: #f8f8f2;}
-body.dracula #set-zoom-btn {background-color: #22242e; border: 1px solid #282a36;}
-
-body.dracula #editor {background-color: #282a36; color: #f8f8f2; border: 1px solid #22242e;}
-body.dracula #output {border: 1px solid #282a36;}
-
-body.dracula .menu-content {background-color: #282a36; border: 1px solid #22242e;}
-body.dracula #theme-menu h1 {background-color: #22242e;}
-body.dracula #theme-menu h6 {background-color: #22242e;}
-body.dracula #theme {background-color: #282a36; color: #f8f8f2;}
-
-body.dracula footer {background-color: #22242e; color: #f8f8f2;}
-
-/* onedark */
-body.onedark {background-color: #282c34;}
-body.onedark header h1 {background-color: #1d2025; color: #abb2bf;}
-
-body.onedark .topbar-list {background-color: #17191d;}
-body.onedark .topbar-list button {background-color: #17191d; color: #abb2bf;}
-body.onedark .dropdown-content {background-color: #1d2025;}
-body.onedark .dropdown-content button {background-color: #1d2025; color: #abb2bf;}
-body.onedark .dropdown-content hr {border: 0.5px solid #17191d;}
-body.onedark .dropdown-content button:hover {background-color: #282c34;}
-
-body.onedark .tool button {background-color: #282c34; color: #abb2bf;}
-body.onedark .tool button:hover {background-color: #2f303a; color: #abb2bf;}
-body.onedark #set-zoom-btn {background-color: #22242e; border: 1px solid #282c34;}
-
-body.onedark #editor {background-color: #282c34; color: #abb2bf; border: 1px solid #22242e;}
-body.onedark #output {border: 1px solid #282c34;}
-
-body.onedark .menu-content {background-color: #282c34; border: 1px solid #22242e;}
-body.onedark #theme-menu h1 {background-color: #22242e;}
-body.onedark #theme-menu h6 {background-color: #22242e;}
-body.onedark #theme {background-color: #282c34; color: #abb2bf;}
-
-body.onedark footer {background-color: #1d2025; color: #abb2bf;}
+.apply-changes {
+	border: none;
+	font-size: 90%;
+	font-weight: bold;
+	height: 35px;
+	width: 100%;
+	margin: 10px 0 0 0;
+	transition: 1s ease;
+}
 
 
 

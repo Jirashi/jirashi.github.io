@@ -8,12 +8,12 @@ let htmlViewer = document.getElementById('output');
 
 var undone = [];
 var copiedText = "";
-var themes = ["light-theme", "dark-theme", "dracula", "one-dark"]
 
 function newFile() {
     if (confirm("New file? All current text will be deleted.")) {
-        editor.innerHTML = "";
+        editor.value = "";
         fileName.value = `Untitled.${container.className}`;
+        window.location.href = "https://techlujo.github.io/projects/Textacular/";
     }
 }
 
@@ -55,11 +55,58 @@ function saveFile() {
             window.URL.revokeObjectURL(url);  
         }, 0); 
     }
+ 
 }
 
 function saveFileAs () {
     fileName.value = prompt("Save As:", fileName.value)
     if (fileName.value) {saveFile();}
+}
+
+function saveLocal() {
+    function makeKey(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        if (localStorage.getItem(result)) {
+            makeKey(10)
+        } else {
+            return result;
+        }
+    }
+    var file = [fileName.value, editor.value];
+    var key = makeKey(10)
+    
+    if (editor.value.length > 0) {
+        localStorage.setItem(key, JSON.stringify(file));
+        prompt(`Saved file as ${fileName.value} \nKey:`, key)
+    }
+}
+
+function loadLocal(key) {
+    var file = JSON.parse(localStorage.getItem(key))
+    if (file) {
+        fileName.value = file[0]
+        editor.value = file[1]
+    }
+}
+
+function loadLocalFromURL() {
+    function getKey() {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            return pair[1]
+        }
+        return(false);
+    }
+    if (getKey()) {
+        loadLocal(getKey())
+    }
 }
 
 function Undo() {
@@ -151,8 +198,13 @@ function Type(type) {
 }
 
 function Settings() {
-    alert("Whoops! You've found a feature that hasn't yet been implemented, check back later.")
+    menu = document.getElementById('settings-menu');
+    menu.style.display = "block";
 }
+
+editor.addEventListener("keyup", function() {
+    Update();
+});
 
 fileName.addEventListener('change', function() {
     if (fileName.value) {
@@ -175,17 +227,6 @@ fileUpload.addEventListener('change', function() {
         console.log(file.type);
         fileName.value = file.name;
     }
-});
-
-editor.addEventListener("keyup", function() {
-    Update();
-});
-
-document.getElementById('theme').addEventListener('change', function() {
-    document.body.classList.replace (
-        document.body.classList[0], 
-        document.getElementById('theme').value
-    );
 });
 
 function numColmn(textarea){
