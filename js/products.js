@@ -6,9 +6,9 @@ var products = [
         tags: ["qrcode", "generator", "link", "qr"]
     },
     {
-        name: "Notepad Pro",
-        description: "Notepad Pro is a rich text editor that allows you to edit and save notes online.",
-        href: "Notepad-Pro",
-        tags: ["notes", "notepad", "text", "editor"]
+        name: "Textacular",
+        description: "With Textacular you can open, create and save text/html files online.",
+        href: "Textacular",
+        tags: ["text", "editor", "html", "compile"]
     }
 ]
