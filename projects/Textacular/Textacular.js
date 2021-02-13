@@ -1,18 +1,19 @@
-let output = document.getElementById('output');
+let editor = document.getElementById('editor');
 let fileName = document.getElementById('file-name');
 let fileUpload = document.getElementById('file-upload');
 let zoomAmnt = document.getElementById('set-zoom-btn');
 
-let editors = document.getElementById('editors');
-let htmlViewer = document.getElementById('html-viewer');
+let container = document.getElementById('container');
+let htmlViewer = document.getElementById('output');
 
 var undone = [];
 var copiedText = "";
+var themes = ["light-theme", "dark-theme", "dracula", "one-dark"]
 
 function newFile() {
     if (confirm("New file? All current text will be deleted.")) {
-        output.innerHTML = "";
-        fileName.value = `Untitled.${editors.className}`;
+        editor.innerHTML = "";
+        fileName.value = `Untitled.${container.className}`;
     }
 }
 
@@ -26,18 +27,18 @@ function emailFile() {
         window.location.href = `
         mailto:${email}
         ?subject=${fileName.value}
-        &body=${output.value}`;
+        &body=${editor.value}`;
     }
 }
 
 function saveFile() {
     var fileType = "text/plain";
-    if (editors.className == "txt") {
+    if (container.className == "txt") {
         fileType = "text/plain";
-    } else if (editors.className == "html") {
+    } else if (container.className == "html") {
         fileType = "text/html";
     }
-    var file = new Blob([ output.value ], { type: fileType });
+    var file = new Blob([ editor.value ], { type: fileType });
     var filename = fileName.value;
 
     if (window.navigator.msSaveOrOpenBlob) // IE10+
@@ -64,56 +65,62 @@ function saveFileAs () {
 function Undo() {
     let last = undone.length
     if (last < 101) {
-        undone.push(output.value.slice(output.value.length - 1));
-        output.value = output.value.slice(0, output.value.length - 1)
+        undone.push(editor.value.slice(editor.value.length - 1));
+        editor.value = editor.value.slice(0, editor.value.length - 1)
     }
 }
 
 function Redo() {
     let last = undone.length - 1;
     if (last > -1) {
-        output.value += undone[last];
+        editor.value += undone[last];
         undone.splice(last, 1)
     }
 }
 
 function Copy() {
-    copiedText = output.value;
-    output.select();
-    output.setSelectionRange(0, 99999)
+    copiedText = editor.value;
+    editor.select();
+    editor.setSelectionRange(0, 99999)
     document.execCommand("copy");
 }
 
 function Clear() {
-    if (output.value.length > 0) {
+    if (editor.value.length > 0) {
         if (confirm("Are you sure? All current text will be deleted.")) {
-            output.value = "";
+            editor.value = "";
         }
     }
 }
 
 function Cut() {
     Copy()
-    output.value = "";
+    editor.value = "";
 }
 
 function Paste() {
-    output.value += copiedText
+    editor.value += copiedText
 }
 
 function slctAll() {
-    output.select();
+    editor.select();
+}
+
+function Update() {
+    if (container.className == "html") {
+        document.getElementById('output').innerHTML = editor.value;
+    }
 }
 
 function Zoom(inout) {
-    let fontSize = output.style.fontSize;
+    let fontSize = editor.style.fontSize;
     var truFontSize = parseInt(fontSize.slice(0, fontSize.length - 2))
     if (inout) {var ZoomAmnt = 2;} else {var ZoomAmnt = -2;}
     if (truFontSize >= 32 || 6 > truFontSize) {
-        output.style.fontSize = "18px";
+        editor.style.fontSize = "18px";
         zoomAmnt.innerHTML = "18px"
     } else {
-        output.style.fontSize = `${(truFontSize + ZoomAmnt)}px`;
+        editor.style.fontSize = `${(truFontSize + ZoomAmnt)}px`;
         zoomAmnt.innerHTML = `${(truFontSize + ZoomAmnt)}px`;
     }
 }
@@ -122,17 +129,25 @@ function setZoom() {
     var amnt = prompt("Choose size:", "6-32")
     if (amnt > 5 && amnt < 33) {
         amnt = `${amnt}px`;
-        output.style.fontSize = amnt;
+        editor.style.fontSize = amnt;
         zoomAmnt.innerHTML = amnt;
     }
 }
 
 function Theme() {
-    document.body.classList.toggle('dark-theme');
+    menu = document.getElementById('theme-menu');
+    menu.style.display = "block";
+}
+  
+window.onclick = function(event) {
+    if (event.target.className == "menu") {
+        event.target.style.display = "none";
+    }
 }
 
 function Type(type) {
-    editors.classList.replace(editors.classList[0], type);
+    container.classList.replace(container.classList[0], type);
+    Update();
 }
 
 function Settings() {
@@ -141,11 +156,11 @@ function Settings() {
 
 fileName.addEventListener('change', function() {
     if (fileName.value) {
-        if (!fileName.value.endsWith(`.${editors.className}`)) {
-            fileName.value += `.${editors.className}`;
+        if (!fileName.value.endsWith(`.${container.className}`)) {
+            fileName.value += `.${container.className}`;
         }
     } else {
-        fileName.value = `Untitled.${editors.className}`
+        fileName.value = `Untitled.${container.className}`
     }
 });
 
@@ -155,15 +170,27 @@ fileUpload.addEventListener('change', function() {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = function(e) {
-            output.value = e.target.result;
+            editor.value = e.target.result;
         };
         console.log(file.type);
         fileName.value = file.name;
     }
 });
 
-output.addEventListener('change', function() {
-    if (editors.className == "html") {
-        document.getElementById('html-content').innerHTML = output.value;
-    }
+editor.addEventListener("keyup", function() {
+    Update();
 });
+
+document.getElementById('theme').addEventListener('change', function() {
+    document.body.classList.replace (
+        document.body.classList[0], 
+        document.getElementById('theme').value
+    );
+});
+
+function numColmn(textarea){
+    var textLines = textarea.value.substr(0, textarea.selectionStart).split("\n");
+    var currentLineNumber = textLines.length;
+    var currentColumnIndex = textLines[textLines.length-1].length;
+    document.getElementById('numColmn').innerHTML = "Line " + currentLineNumber+", Column " + currentColumnIndex;
+}

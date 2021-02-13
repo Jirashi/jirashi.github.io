@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/projects/Textacular/Textacular.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    <body>
+    <body class="light-theme">
         <header>
             <h1><i class=" fa fa-pencil-square"></i> Textacular <textarea id="file-name">Untitled.txt</textarea></h1> 
         </header>
@@ -46,8 +46,17 @@
                             <div class="dropdown-content">
                                 <button class="tool" id="set-zoomin-btn" onclick="Zoom(true)"><i class="fa fa-plus-circle"></i> Zoom In</button>
                                 <button class="tool" id="set-zoomout-btn" onclick="Zoom(false)"><i class="fa fa-minus-circle"></i> Zoom Out</button><hr>
-                                <button class="tool" id="set-theme-btn" onclick="Theme()"><i class="fa fa-paint-brush"></i> Theme</button>
                                 <button class="tool" id="set-settings-btn" onclick="Settings()"><i class="fa fa-wrench"></i> Settings</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button>View <i class='fa fa-caret-down'></i></button>
+                            <div class="dropdown-content">
+                                <button class="tool" id="set-theme-btn" onclick="Theme()"><i class="fa fa-paint-brush"></i> Theme</button><hr>
+                                <button class="tool" id="set-zoomin-btn" onclick="Type('text')"><i class="fa fa-font"></i> Text</button>
+                                <button class="tool" id="set-zoomout-btn" onclick="Type('html')"><i class="fa fa-code"></i> HTML</button>
                             </div>
                         </div>
                     </li>
@@ -59,15 +68,6 @@
                                 <a href="mailto:techlujo@gmail.com&subject=Feedback on Notepad Pro&body= Thanks for using our free tool Notepad Pro, please send us your feedback:">
                                     <button><i class="fa fa-comment-o"></i> Feedback</button>
                                 </a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button>View <i class='fa fa-caret-down'></i></button>
-                            <div class="dropdown-content">
-                                <button class="tool" id="set-zoomin-btn" onclick="Type('text')"><i class="fa fa-font"></i> Text</button>
-                                <button class="tool" id="set-zoomout-btn" onclick="Type('html')"><i class="fa fa-code"></i> HTML</button><hr>
                             </div>
                         </div>
                     </li>
@@ -87,14 +87,30 @@
                     <li class="tool"><a href="/projects/Notepad-Pro/help.html"><button><i class="fa fa-question-circle"></i></button></a></li>
                 </ul>
             </div>
-            <div id="editors" class="txt">
-                <textarea id="output" style="font-size: 18px;"></textarea>
-                <div id="html-viewer">
-                    <h1 id="banner">HTML Output</h1>
-                    <div id="html-content"></div>
+            <div id="container" class="txt">
+                <textarea id="editor" style="font-size: 18px;" onkeyup="numColmn(this);" onmouseup="this.onkeyup();"></textarea><div id="output"></div></div>
+            </div>
+            <div id="theme-menu" class="menu">
+                <div class="menu-content">
+                    <h1>Theme</h1>
+                    <h6>Theme compadability for code is not yet available, sorry!</h6>
+                    <select id="theme" name="themes">
+                        <option value="light-theme">Light (default)</option>
+                        <option value="dark-theme">Dark (default)</option>
+                        <option value="dracula">Dracula</option>
+                        <option value="onedark">One Dark Pro</option>
+                    </select>
+                </div>
+            </div>
+            <div id="settings-menu" class="menu">
+                <div class="menu-content">
+                  <p>Some text in the Modal..</p>
                 </div>
             </div>
         </main>
+        <footer id="numColmn">
+            Line 0, Column 0
+        </footer>
         <script src="/projects/Textacular/Textacular.js"></script>
     </body>
 </html>
