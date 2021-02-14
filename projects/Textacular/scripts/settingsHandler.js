@@ -7,6 +7,12 @@ var themes = {
     dracula: ["#282a36","#282a36","#22242e","#22242e","#2f303a","#f8f8f2","#6272a4"]
 };
 
+function setPref(num, val) {
+    preferences = JSON.parse(localStorage.getItem("preferences"))
+    preferences[num] = val;
+    localStorage.setItem("preferences", JSON.stringify(preferences));
+}
+
 function theme(theme, colors) {
     for (var color of colors) {
         if (!regex.exec(color)) {
@@ -40,13 +46,16 @@ function theme(theme, colors) {
         body.${theme} footer {background-color: ${colors[2]}; color: ${colors[5]};}
     `;
     document.getElementById('theme').innerHTML = themeCSS;
+    document.body.classList.replace(document.body.classList[0], theme)
 }
 
 for (button of document.getElementsByClassName('apply-changes')) {
+    button.addEventListener('click', function(event) {
+        event.target.parentElement.parentElement.style.display = "none";
+    })
     if (button.id == "apply-changes-theme") {
         button.addEventListener('click', function() {
             themeName = document.getElementById('theme-select').value;
-            document.body.classList.replace(document.body.classList[0], themeName)
             themes["custom"] = [
                 document.getElementById('custom-theme-background').value,
                 document.getElementById('custom-theme-foreground').value,
@@ -55,16 +64,34 @@ for (button of document.getElementsByClassName('apply-changes')) {
                 document.getElementById('custom-theme-hover').value,
                 document.getElementById('custom-theme-text').value,
                 document.getElementById('custom-theme-special').value,
-            ]            
+            ]
+            setPref(0, themeName);
             theme(themeName, themes[themeName])
         });
     } else if (button.id == "apply-changes-pref") {
         button.addEventListener('click', function() {
             var editor =  document.getElementById('editor');
+            setPref(1, document.getElementById('font').value);
+            setPref(2, document.getElementById('font-weight').value);
             editor.style.fontFamily = document.getElementById('font').value;
             editor.style.fontWeight = document.getElementById('font-weight').value;
         });
+    } 
+}
+
+function loadPreferences() {
+    let preferences = localStorage.getItem("preferences")
+
+    if (preferences) {
+        let prefs = JSON.parse(preferences);
+        theme(prefs[0], themes[prefs[0]]);
+
+        editor.style.fontFamily = prefs[1];
+        editor.style.fontWeight = prefs[2];
+    } else {
+        let defaultPreferences = JSON.stringify(["light", "Arial, Helvetica, sans-serif", "400"]);
+        localStorage.setItem("preferences", defaultPreferences);
+        loadPreferences()
     }
 }
 
-theme(themeName, themes[themeName])

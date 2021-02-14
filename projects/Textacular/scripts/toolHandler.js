@@ -71,26 +71,69 @@ function saveLocal() {
         for ( var i = 0; i < length; i++ ) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
-        if (localStorage.getItem(result)) {
-            makeKey(10)
-        } else {
-            return result;
-        }
+        return result;
     }
-    var file = [fileName.value, editor.value];
-    var key = makeKey(10)
-    
-    if (editor.value.length > 0) {
-        localStorage.setItem(key, JSON.stringify(file));
-        prompt(`Saved file as ${fileName.value} \nKey:`, key)
+    var fileContent = [fileName.value, editor.value];
+    var fileKey = makeKey(10);
+    var fileComplete = JSON.stringify({Key: fileKey, Content: fileContent});
+    var files = localStorage.getItem("files");
+
+    if (files) {
+        let parsedFiles = JSON.parse(files);
+        for (var truFile of parsedFiles) {
+            file = JSON.parse(truFile);
+            if (file.Content[0] == fileName.value) {
+                file.Content[1] = editor.value;
+                parsedFiles[parsedFiles.indexOf(truFile)] = JSON.stringify(file);
+                localStorage.setItem("files", JSON.stringify(parsedFiles));
+                return;
+            }
+        }
+        parsedFiles.push(fileComplete);
+        localStorage.setItem("files", JSON.stringify(parsedFiles));
+    } else {
+        localStorage.setItem("files", JSON.stringify([fileComplete]));
+    }
+    prompt(`Saved file as ${fileName.value} \nKey:`, fileKey);
+}
+
+function delLocal(key) {
+    var files = JSON.parse(localStorage.getItem("files"));
+    for (var truFile of files) {
+        file = JSON.parse(truFile)
+        if (file.Key == key) {
+            if (confirm(`Are you sure you want to delete ${file.Content[0]}?`)) {
+                files.splice(files.indexOf(truFile), 1);
+                localStorage.setItem("files", JSON.stringify(files));
+            }
+        }
     }
 }
 
 function loadLocal(key) {
-    var file = JSON.parse(localStorage.getItem(key))
-    if (file) {
-        fileName.value = file[0]
-        editor.value = file[1]
+    let files = JSON.parse(localStorage.getItem("files"));
+    for (var file of files) {
+        file = JSON.parse(file)
+        if (file.Key == key) {
+            fileName.value = file.Content[0]
+            editor.value = file.Content[1]
+        }
+    }
+}
+
+function loadLocalFiles() {
+    let files = localStorage.getItem("files");
+    let menu = document.getElementById('localfiles-menu');
+    let filelist = document.getElementById('lclfiles');
+    filelist.innerHTML = "";
+    if (files) {
+        let parsedFiles = JSON.parse(localStorage.getItem("files"));
+        for (var file of parsedFiles) {
+            file = JSON.parse(file);
+            optionHTML = `<option value="${file.Key}">${file.Content[0]} (${file.Content[1].slice(0, 10)}...)</option>`;
+            filelist.insertAdjacentHTML('beforeend', optionHTML);
+        }
+        menu.style.display = "block";
     }
 }
 
@@ -182,7 +225,7 @@ function setZoom() {
 }
 
 function Theme() {
-    menu = document.getElementById('theme-menu');
+    let menu = document.getElementById('theme-menu');
     menu.style.display = "block";
 }
   
@@ -198,7 +241,7 @@ function Type(type) {
 }
 
 function Settings() {
-    menu = document.getElementById('settings-menu');
+    let menu = document.getElementById('settings-menu');
     menu.style.display = "block";
 }
 
@@ -224,7 +267,6 @@ fileUpload.addEventListener('change', function() {
         reader.onload = function(e) {
             editor.value = e.target.result;
         };
-        console.log(file.type);
         fileName.value = file.name;
     }
 });

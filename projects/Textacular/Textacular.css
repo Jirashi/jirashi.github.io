@@ -207,6 +207,17 @@ footer {
 	transition: 1s ease;
 }
 
+#open-lclfile {
+	margin: 0;
+}
+
+#del-lclfile {
+	font-size: 80%;
+	font-weight: normal;
+	height: 20px;
+	margin: 0;
+}
+
 
 
 

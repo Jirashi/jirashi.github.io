@@ -3,13 +3,14 @@
     <head>
         <title>Textacular</title>
         <link rel="stylesheet" href="/css/styles.css">
+        <link rel="icon" href="/projects/Textacular/Textacular.ico">
         <link rel="stylesheet" href="/projects/Textacular/Textacular.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Source+Code+Pro:wght@300;400;500;700;900&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
         <style id="theme"></style>
     </head>
-    <body class="light" onload="loadLocalFromURL()">
+    <body class="light" onload="loadLocalFromURL(); loadPreferences()">
         <header>
             <h1><i class=" fa fa-pencil-square"></i> Textacular <textarea id="file-name">Untitled.txt</textarea></h1> 
         </header>
@@ -26,7 +27,7 @@
                                 <button class="tool" id="file-save-btn" onclick="saveFile()"><i class="fa fa-save"></i> Save</button>
                                 <button class="tool" id="file-saveas-btn" onclick="saveFileAs()"><i class="fa fa-save"></i> Save As...</button>
                                 <button class="tool" id="file-savelcl-btn" onclick="saveLocal()"><i class="fa fa-sticky-note"></i> Save Locally</button>
-                                <button class="tool" id="file-savelcl-btn" onclick="loadLocal(prompt(`Load Locally:`, 'Key'))"><i class="fa fa-sticky-note-o"></i> Load Locally</button>
+                                <button class="tool" id="file-savelcl-btn" onclick="loadLocalFiles()"><i class="fa fa-sticky-note-o"></i> Local Storage</button>
                                 <button class="tool" id="file-email-btn" onclick="emailFile()"><i class="fa fa-envelope-o"></i> Email</button>
                             </div>
                         </div>
@@ -70,7 +71,7 @@
                             <button>Help <i class='fa fa-caret-down'></i></button>
                             <div class="dropdown-content">
                                 <a href="/projects/Textacular/help/"><button><i class="fa fa-question-circle"></i> Help</button></a>
-                                <a href="mailto:techlujo@gmail.com&subject=Feedback on Notepad Pro&body= Thanks for using our free tool Notepad Pro, please send us your feedback:">
+                                <a href="mailto:techlujo@gmail.com&subject=Feedback for Textacular&body= Thanks for using our free tool Textacular, please send us your feedback:">
                                     <button><i class="fa fa-comment-o"></i> Feedback</button>
                                 </a>
                             </div>
@@ -145,6 +146,16 @@
                         <option value="900">Black (900)</option>
                     </select>
                     <button id="apply-changes-pref" class="apply-changes">Apply Changes</button>
+                </div>
+            </div>
+            <div id="localfiles-menu" class="menu">
+                <div class="menu-content">
+                    <h1>Local Storage</h1>
+                    <h3>Select:</h3>
+                    <select id="lclfiles" class="options" name="lclfiles">
+                    </select>
+                    <button id="open-lclfile" class="apply-changes" onclick="loadLocal(document.getElementById('lclfiles').value)">Open File</button>
+                    <button id="del-lclfile" class="apply-changes" onclick="delLocal(document.getElementById('lclfiles').value)">Delete File</button>
                 </div>
             </div>
         </main>
