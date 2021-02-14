@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Source+Code+Pro:wght@300;400;500;700;900&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-        <style id="theme"></style>
+        <style id="style"></style>
     </head>
     <body class="light" onload="loadLocalFromURL(); loadPreferences()">
         <header>
@@ -82,7 +82,7 @@
             <div class="toolbar">
                 <ul class="tool-list">
                     <li class="tool"><button id="file-save-btn" onclick="saveFile()"><i class="fa fa-save"></i></button></li>
-                    <li class="tool"><button id="file-open-btn" onclick="openFile()"><i class="fa fa-folder-open-o"></i></button></li>
+                    <li class="tool"><button id="file-open-btn" onclick="openFile('text')"><i class="fa fa-folder-open-o"></i></button></li>
                     <li class="tool"><button id="edit-undo-btn" onclick="Undo()"><i class="fa fa-undo"></i></button></li>
                     <li class="tool"><button id="edit-redo-btn" onclick="Redo()"><i class="fa fa-repeat"></i></button></li>
                     <li class="tool"><button id="edit-copy-btn" onclick="Copy()"><i class="fa fa-copy"></i></button></li>
@@ -131,12 +131,11 @@
                     <h1>Preferences</h1>
                     <h3>Font Family:</h3>
                     <select id="font" class="options" name="fonts">
-                        <option value="Arial, Helvetica, sans-serif">Arial (default)</option>
-                        <option value="'Courier New', Courier, monospace">Courier New</option>
-                        <option value="'Roboto', sans-serif">Roboto</option>
-                        <option value="'Source Code Pro', monospace">Source Code Pro</option>
-                        <option value="'Ubuntu', sans-serif">Ubuntu</option>
+                        
+                        <option value="joystix monospace">Custom</option>
                     </select>
+                    <button class="options" id="font-upload-btn" onclick="openFile('font')"><i class="fa fa-folder-open-o"></i> Upload font</button>
+                    <input type="file" id="font-upload" accept="font/ttf" hidden/>
                     <h3>Font Weight:</h3>
                     <select id="font-weight" class="options" name="font-weights">
                         <option value="300">Light (300)</option>

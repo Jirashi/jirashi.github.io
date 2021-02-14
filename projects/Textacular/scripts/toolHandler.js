@@ -1,6 +1,5 @@
 let editor = document.getElementById('editor');
 let fileName = document.getElementById('file-name');
-let fileUpload = document.getElementById('file-upload');
 let zoomAmnt = document.getElementById('set-zoom-btn');
 
 let container = document.getElementById('container');
@@ -17,8 +16,12 @@ function newFile() {
     }
 }
 
-function openFile() {
-    fileUpload.click();
+function openFile(type) {
+    if (type == "text") {
+        document.getElementById('file-upload').click();
+    } else if (type== "font") {
+        document.getElementById('font-upload').click();
+    }
 }
 
 function emailFile() {
@@ -242,7 +245,24 @@ function Type(type) {
 
 function Settings() {
     let menu = document.getElementById('settings-menu');
-    menu.style.display = "block";
+    let fonts = localStorage.getItem("fonts");
+    let fontList = document.getElementById('font');
+    fontList.innerHTML = `
+    <option value="Arial, Helvetica, sans-serif">Arial (default)</option>
+    <option value="'Courier New', Courier, monospace">Courier New</option>
+    <option value="'Roboto', sans-serif">Roboto</option>
+    <option value="'Source Code Pro', monospace">Source Code Pro</option>
+    <option value="'Ubuntu', sans-serif">Ubuntu</option>
+    `;
+
+    if (fonts) {
+        let parsedFonts = JSON.parse(fonts);
+        for (var font of parsedFonts) {
+            optionHTML = `<option value="${[font[0], font[1]]}">${font[0]}</option>`;
+            fontList.insertAdjacentHTML('beforeend', optionHTML);
+        }
+        menu.style.display = "block";
+    }
 }
 
 editor.addEventListener("keyup", function() {
@@ -259,8 +279,8 @@ fileName.addEventListener('change', function() {
     }
 });
 
-fileUpload.addEventListener('change', function() {
-    var file = fileUpload.files[0];
+document.getElementById('file-upload').addEventListener('change', function() {
+    var file = document.getElementById('file-upload').files[0];
     if (file) {
         var reader = new FileReader();
         reader.readAsText(file);
@@ -270,6 +290,40 @@ fileUpload.addEventListener('change', function() {
         fileName.value = file.name;
     }
 });
+
+document.getElementById('font-upload').addEventListener('change', function() {
+    saveFont()
+});
+
+function saveFont() {
+    let fonts = localStorage.getItem("fonts");
+    let font = document.getElementById('font-upload').files[0];
+    let fontName = font.name.slice(0, font.name.length - 4);
+    var reader = new FileReader();
+
+    reader.readAsDataURL(font);
+    reader.onload = function() {
+        let fontURL = reader.result.replace("application/octet-stream", "font/ttf");
+        if (fonts) {
+            let parsedFonts = JSON.parse(fonts)
+            parsedFonts.push([fontName, fontURL])
+            localStorage.setItem("fonts", JSON.stringify(parsedFonts));
+        } else {
+            localStorage.setItem("fonts", JSON.stringify([[fontName, fontURL]]));
+        }
+    };
+}
+
+function openFont(fontName) {
+    let fonts = JSON.parse(localStorage.getItem("fonts"));
+
+    for (let font of fonts) {  
+        if (font[0] == fontName) {
+            return font;
+        }
+    }
+    return;
+}
 
 function numColmn(textarea){
     var textLines = textarea.value.substr(0, textarea.selectionStart).split("\n");
