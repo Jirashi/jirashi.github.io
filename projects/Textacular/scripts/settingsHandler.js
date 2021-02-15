@@ -1,12 +1,12 @@
 function setPref(num, val) {
-    var preferences = JSON.parse(localStorage.getItem("preferences"))
+    var preferences = JSON.parse(sessionStorage.getItem("preferences"))
     preferences[num] = val;
-    localStorage.setItem("preferences", JSON.stringify(preferences));
+    sessionStorage.setItem("preferences", JSON.stringify(preferences));
 }
 
 function style() {
-    let preferences = JSON.parse(localStorage.getItem("preferences"));
-    let fonts = localStorage.getItem("fonts");
+    let preferences = JSON.parse(sessionStorage.getItem("preferences"));
+    let fonts = sessionStorage.getItem("fonts");
     let theme = JSON.parse(preferences[0])[0];
     let colors = JSON.parse(preferences[0])[1];
     let font = preferences[1];
@@ -84,11 +84,11 @@ for (button of document.getElementsByClassName('apply-changes')) {
 }
 
 function loadPreferences() {
-    let preferences = localStorage.getItem("preferences");
+    let preferences = sessionStorage.getItem("preferences");
 
     if (!preferences) {
         let defaultPreferences = JSON.stringify([JSON.stringify(['light',['#eeeeee','#f9f9f9','#dddddd','#ffffff','#dddddd','#000000','#00c3ff']]), "Arial, Helvetica, sans-serif", "400"]);
-        localStorage.setItem("preferences", defaultPreferences);
+        sessionStorage.setItem("preferences", defaultPreferences);
         return loadPreferences();
     }
     style();
