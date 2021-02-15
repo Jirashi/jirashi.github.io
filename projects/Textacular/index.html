@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Source+Code+Pro:wght@300;400;500;700;900&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
         <style id="style"></style>
     </head>
-    <body class="light" onload="loadLocalFromURL(); loadPreferences()">
+    <body class="light" onload="checkURL(); loadPreferences()">
         <header>
             <h1><i class=" fa fa-pencil-square"></i> Textacular <textarea id="file-name">Untitled.txt</textarea></h1> 
         </header>
@@ -26,9 +26,9 @@
                                 <input type="file" id="file-upload" accept="text/plain, text/html" hidden/>
                                 <button class="tool" id="file-save-btn" onclick="saveFile()"><i class="fa fa-save"></i> Save</button>
                                 <button class="tool" id="file-saveas-btn" onclick="saveFileAs()"><i class="fa fa-save"></i> Save As...</button>
+                                <button class="tool" id="file-email-btn" onclick="emailFile()"><i class="fa fa-envelope-o"></i> Email</button>
                                 <button class="tool" id="file-savelcl-btn" onclick="saveLocal()"><i class="fa fa-sticky-note"></i> Save Locally</button>
                                 <button class="tool" id="file-savelcl-btn" onclick="loadLocalFiles()"><i class="fa fa-sticky-note-o"></i> Local Storage</button>
-                                <button class="tool" id="file-email-btn" onclick="emailFile()"><i class="fa fa-envelope-o"></i> Email</button>
                             </div>
                         </div>
                     </li>
@@ -99,30 +99,18 @@
             <div id="theme-menu" class="menu">
                 <div class="menu-content">
                     <h1>Theme</h1>
-                    <h6>Theme compadability for code is not yet available, sorry!</h6>
                     <h3>Theme:</h3>
-                    <select id="theme-select" class="options" name="themes">
-                        <option value="light">Light (default)</option>
-                        <option value="dark">Dark</option>
-                        <option value="onedark">One Dark Pro</option>
-                        <option value="dracula">Dracula</option>
-                        <option value="custom">Custom</option>
-                    </select>
+                    <select id="theme-select" class="options" name="themes"></select>
+                    <div class="file-options">
+                        <button id="open-theme" onclick="editTheme()"><i class="fa fa-folder-open"></i></button>
+                        <button id="delete-theme" onclick="delTheme()"><i class="fa fa-trash"></i></button>
+                    </div><br>
+                    <h3 style="display: inline-block;">Preview:</h3><input type="checkbox" id="preview">
                     <h3>Custom Theme:</h3>
-                    <h4>Background:</h4>
-                    <textarea id="custom-theme-background" class="options" maxlength="7"></textarea>
-                    <h4>Foreground:</h4>
-                    <textarea id="custom-theme-foreground" class="options" maxlength="7"></textarea>
-                    <h4>Border:</h4>
-                    <textarea id="custom-theme-border" class="options" maxlength="7"></textarea>
-                    <h4>Top Menu:</h4>
-                    <textarea id="custom-theme-topbar" class="options" maxlength="7"></textarea>
-                    <h4>Hover:</h4>
-                    <textarea id="custom-theme-hover" class="options" maxlength="7"></textarea>
-                    <h4>Text:</h4>
-                    <textarea id="custom-theme-text" class="options" maxlength="7"></textarea>
-                    <h4>Special:</h4>
-                    <textarea id="custom-theme-special" class="options" maxlength="7"></textarea>
+                    <textarea id="import-theme" class="options"></textarea>
+                    <div class="file-options">
+                        <button id="open-theme" onclick="saveTheme(); document.getElementById('apply-changes-theme').click()"><i class="fa fa-upload"></i></button>
+                    </div><br>
                     <button id="apply-changes-theme" class="apply-changes">Apply Changes</button>
                 </div>
             </div>
@@ -131,8 +119,6 @@
                     <h1>Preferences</h1>
                     <h3>Font Family:</h3>
                     <select id="font" class="options" name="fonts">
-                        
-                        <option value="joystix monospace">Custom</option>
                     </select>
                     <button class="options" id="font-upload-btn" onclick="openFile('font')"><i class="fa fa-folder-open-o"></i> Upload font</button>
                     <input type="file" id="font-upload" accept="font/ttf" hidden/>
@@ -151,8 +137,7 @@
                 <div class="menu-content">
                     <h1>Local Storage</h1>
                     <h3>Select:</h3>
-                    <select id="lclfiles" class="options" name="lclfiles">
-                    </select>
+                    <select id="lclfiles" class="options" name="lclfiles"></select>
                     <button id="open-lclfile" class="apply-changes" onclick="loadLocal(document.getElementById('lclfiles').value)">Open File</button>
                     <button id="del-lclfile" class="apply-changes" onclick="delLocal(document.getElementById('lclfiles').value)">Delete File</button>
                 </div>

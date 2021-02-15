@@ -32,7 +32,6 @@ footer {
 	width: 300px;
 	margin: 0;
 	padding: 10px;
-	vertical-align: -10px;
 	resize: none;
 	outline: none;
 	text-decoration: none;
@@ -184,7 +183,7 @@ footer {
 
 .options {
 	border: none;
-	margin: 10px;
+	margin: 10px 1px 10px 10px;
 	padding: 5px;
 	outline: none;
 	transition: 2s ease;
@@ -218,6 +217,19 @@ footer {
 	margin: 0;
 }
 
+#preview {
+	display: inline-block;
+}
 
+.file-options {
+	display: inline-block;
+}
+
+.file-options button {
+	border: none;
+	padding: 6px 8px;
+	outline: none;
+	transition: 2s ease;
+}
 
 

@@ -35,20 +35,14 @@ function emailFile() {
 }
 
 function saveFile() {
-    var fileType = "text/plain";
-    if (container.className == "txt") {
-        fileType = "text/plain";
-    } else if (container.className == "html") {
-        fileType = "text/html";
-    }
-    var file = new Blob([ editor.value ], { type: fileType });
+    var file = new Blob([ editor.value ], { type: "text/plain" });
     var filename = fileName.value;
 
     if (window.navigator.msSaveOrOpenBlob) // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
     else { // Others
         var a = document.createElement("a"),
-                url = URL.createObjectURL(file);
+        url = URL.createObjectURL(file);
         a.href = url;
         a.download = filename;
         document.body.appendChild(a);
@@ -58,7 +52,6 @@ function saveFile() {
             window.URL.revokeObjectURL(url);  
         }, 0); 
     }
- 
 }
 
 function saveFileAs () {
@@ -140,21 +133,6 @@ function loadLocalFiles() {
     }
 }
 
-function loadLocalFromURL() {
-    function getKey() {
-        var query = window.location.search.substring(1);
-        var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
-            var pair = vars[i].split("=");
-            return pair[1]
-        }
-        return(false);
-    }
-    if (getKey()) {
-        loadLocal(getKey())
-    }
-}
-
 function Undo() {
     let last = undone.length
     if (last < 101) {
@@ -228,7 +206,27 @@ function setZoom() {
 }
 
 function Theme() {
+    let preferences = JSON.parse(localStorage.getItem("preferences"));
     let menu = document.getElementById('theme-menu');
+    let themes = localStorage.getItem("themes");
+    let themeList = document.getElementById('theme-select');
+
+    themeList.innerHTML = `
+    <option value="['light',['#eeeeee','#f9f9f9','#dddddd','#ffffff','#dddddd','#000000','#00c3ff']]">Light (default)</option>
+    <option value="['dark', ['#1d1d1d','#222222','#141414','#1a1a1a','#313131','#eeeeee','#109c5f']]">Dark</option>
+    <option value="['onedark', ['#282c34','#282c34','#1d2025','#17191d','#282c34','#abb2bf','#e06c75']]">One Dark</option>
+    <option value="['dracula', ['#282a36','#282a36','#22242e','#22242e','#2f303a','#f8f8f2','#6272a4']]">Dracula</option>
+    <option value="['gruvbox', ['#282828','#3c3836','#1d2021','#1d2021','#504945','#ebdbb2','#1d2021']]">Gruvbox</option>
+    `;
+
+    if (themes) {
+        let parsedThemes = JSON.parse(themes);
+        for (let theme of parsedThemes) {
+            let themeArray = JSON.parse(theme.replaceAll("\'", "\""));
+            let optionHTML = `<option value="${theme}">${themeArray[0]}</option>`;
+            themeList.insertAdjacentHTML('beforeend', optionHTML);
+        }
+    }
     menu.style.display = "block";
 }
   
@@ -258,11 +256,11 @@ function Settings() {
     if (fonts) {
         let parsedFonts = JSON.parse(fonts);
         for (var font of parsedFonts) {
-            optionHTML = `<option value="${[font[0], font[1]]}">${font[0]}</option>`;
+            let optionHTML = `<option value="${font[0]}">${font[0]}</option>`;
             fontList.insertAdjacentHTML('beforeend', optionHTML);
         }
-        menu.style.display = "block";
     }
+    menu.style.display = "block";
 }
 
 editor.addEventListener("keyup", function() {
@@ -292,7 +290,7 @@ document.getElementById('file-upload').addEventListener('change', function() {
 });
 
 document.getElementById('font-upload').addEventListener('change', function() {
-    saveFont()
+    saveFont();
 });
 
 function saveFont() {
@@ -314,15 +312,97 @@ function saveFont() {
     };
 }
 
-function openFont(fontName) {
-    let fonts = JSON.parse(localStorage.getItem("fonts"));
+function saveTheme() {
+    let themes = localStorage.getItem("themes");
+    let importedTheme = document.getElementById('import-theme');
+    let theme = verifyTheme(importedTheme.value)
 
-    for (let font of fonts) {  
-        if (font[0] == fontName) {
-            return font;
+    if (theme) {
+        if (themes) {
+            let parsedThemes = JSON.parse(themes);
+            parsedThemes.push(theme);
+            localStorage.setItem("themes", JSON.stringify(parsedThemes))
+        } else {
+            localStorage.setItem("themes", JSON.stringify([theme]));
         }
     }
-    return;
+    
+    importedTheme.value = "";
+
+    function verifyTheme(toVerify) {
+        /* check if parsable */
+        try {
+           JSON.parse(toVerify.replaceAll("\'", "\""));
+        } catch (error) {
+            return;
+        }
+
+        /* check theme to see if valid */
+        let theme = JSON.parse(toVerify.replaceAll("\'", "\""));
+        if (Array.isArray(theme) && theme.length == 2) {
+            if (theme[0].length < 21 && theme[1].length == 7) {
+                theme[0] = theme[0].replaceAll(" ", "");
+                let regex = /^#[0-9A-F]{6}$/i;
+                for (let color of theme[1]) {
+                    if (!regex.exec(color)) {
+                        return;
+                    }
+                }
+                return JSON.stringify(theme).replaceAll("\"", "\'")
+            }
+        }
+        return;
+    }
+}
+
+function installThemes(themeArray) {
+    if (Array.isArray(themeArray)) {
+        for (theme of themeArray) {
+            saveTheme(theme)
+        }
+    }
+}
+
+function editTheme() {
+    let theme = JSON.parse(document.getElementById('theme-select').value.replaceAll("\'", "\""));
+    document.getElementById("apply-changes-theme").click()
+    fileName.value = theme[0] + ".txt";
+    editor.value = document.getElementById('theme-select').value;
+}
+
+function delTheme() {
+    let themes = localStorage.getItem("themes");
+    let toDelete = document.getElementById('theme-select').value;
+    var toDelName = JSON.parse(toDelete.replaceAll("\'", "\""))[0];
+
+    if (themes) {
+        let parsedThemes = JSON.parse(themes)
+        for (var theme of parsedThemes) {
+            theme = JSON.parse(theme.replaceAll("\'", "\""));
+            if (theme[0] == toDelName && confirm(`Are you sure you want to delete ${theme[0]}?`)) {
+                parsedThemes.splice(parsedThemes.indexOf(toDelete));
+                localStorage.setItem("themes", JSON.stringify(parsedThemes));
+                document.getElementById("apply-changes-theme").click()
+            }
+        }
+    }
+}
+
+function checkURL() {
+    let urlParams = getKey();
+    if (urlParams[0] = "key") {
+        loadLocal(urlParams[1])
+    }
+
+    function getKey() {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            return pair;
+        }
+        return(false);
+    }
 }
 
 function numColmn(textarea){
@@ -331,3 +411,4 @@ function numColmn(textarea){
     var currentColumnIndex = textLines[textLines.length-1].length;
     document.getElementById('numColmn').innerHTML = "Line " + currentLineNumber+", Column " + currentColumnIndex;
 }
+
