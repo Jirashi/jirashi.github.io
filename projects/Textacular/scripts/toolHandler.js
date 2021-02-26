@@ -72,7 +72,7 @@ function saveLocal() {
     var fileContent = [fileName.value, editor.value];
     var fileKey = makeKey(10);
     var fileComplete = JSON.stringify({Key: fileKey, Content: fileContent});
-    var files = sessionStorage.getItem("files");
+    var files = localStorage.getItem("files");
 
     if (files) {
         let parsedFiles = JSON.parse(files);
@@ -81,33 +81,33 @@ function saveLocal() {
             if (file.Content[0] == fileName.value) {
                 file.Content[1] = editor.value;
                 parsedFiles[parsedFiles.indexOf(truFile)] = JSON.stringify(file);
-                sessionStorage.setItem("files", JSON.stringify(parsedFiles));
+                localStorage.setItem("files", JSON.stringify(parsedFiles));
                 return;
             }
         }
         parsedFiles.push(fileComplete);
-        sessionStorage.setItem("files", JSON.stringify(parsedFiles));
+        localStorage.setItem("files", JSON.stringify(parsedFiles));
     } else {
-        sessionStorage.setItem("files", JSON.stringify([fileComplete]));
+        localStorage.setItem("files", JSON.stringify([fileComplete]));
     }
     prompt(`Saved file as ${fileName.value} \nKey:`, fileKey);
 }
 
 function delLocal(key) {
-    var files = JSON.parse(sessionStorage.getItem("files"));
+    var files = JSON.parse(localStorage.getItem("files"));
     for (var truFile of files) {
         file = JSON.parse(truFile)
         if (file.Key == key) {
             if (confirm(`Are you sure you want to delete ${file.Content[0]}?`)) {
                 files.splice(files.indexOf(truFile), 1);
-                sessionStorage.setItem("files", JSON.stringify(files));
+                localStorage.setItem("files", JSON.stringify(files));
             }
         }
     }
 }
 
 function loadLocal(key) {
-    let files = JSON.parse(sessionStorage.getItem("files"));
+    let files = JSON.parse(localStorage.getItem("files"));
     for (var file of files) {
         file = JSON.parse(file)
         if (file.Key == key) {
@@ -118,12 +118,12 @@ function loadLocal(key) {
 }
 
 function loadLocalFiles() {
-    let files = sessionStorage.getItem("files");
+    let files = localStorage.getItem("files");
     let menu = document.getElementById('localfiles-menu');
     let filelist = document.getElementById('lclfiles');
     filelist.innerHTML = "";
     if (files) {
-        let parsedFiles = JSON.parse(sessionStorage.getItem("files"));
+        let parsedFiles = JSON.parse(localStorage.getItem("files"));
         for (var file of parsedFiles) {
             file = JSON.parse(file);
             optionHTML = `<option value="${file.Key}">${file.Content[0]} (${file.Content[1].slice(0, 10)}...)</option>`;
@@ -206,9 +206,8 @@ function setZoom() {
 }
 
 function Theme() {
-    let preferences = JSON.parse(sessionStorage.getItem("preferences"));
     let menu = document.getElementById('theme-menu');
-    let themes = sessionStorage.getItem("themes");
+    let themes = localStorage.getItem("themes");
     let themeList = document.getElementById('theme-select');
 
     themeList.innerHTML = `
@@ -243,7 +242,7 @@ function Type(type) {
 
 function Settings() {
     let menu = document.getElementById('settings-menu');
-    let fonts = sessionStorage.getItem("fonts");
+    let fonts = localStorage.getItem("fonts");
     let fontList = document.getElementById('font');
     fontList.innerHTML = `
     <option value="Arial, Helvetica, sans-serif">Arial (default)</option>
@@ -294,7 +293,7 @@ document.getElementById('font-upload').addEventListener('change', function() {
 });
 
 function saveFont() {
-    let fonts = sessionStorage.getItem("fonts");
+    let fonts = localStorage.getItem("fonts");
     let font = document.getElementById('font-upload').files[0];
     let fontName = font.name.slice(0, font.name.length - 4);
     var reader = new FileReader();
@@ -305,15 +304,15 @@ function saveFont() {
         if (fonts) {
             let parsedFonts = JSON.parse(fonts)
             parsedFonts.push([fontName, fontURL])
-            sessionStorage.setItem("fonts", JSON.stringify(parsedFonts));
+            localStorage.setItem("fonts", JSON.stringify(parsedFonts));
         } else {
-            sessionStorage.setItem("fonts", JSON.stringify([[fontName, fontURL]]));
+            localStorage.setItem("fonts", JSON.stringify([[fontName, fontURL]]));
         }
     };
 }
 
 function saveTheme() {
-    let themes = sessionStorage.getItem("themes");
+    let themes = localStorage.getItem("themes");
     let importedTheme = document.getElementById('import-theme');
     let theme = verifyTheme(importedTheme.value)
 
@@ -321,9 +320,9 @@ function saveTheme() {
         if (themes) {
             let parsedThemes = JSON.parse(themes);
             parsedThemes.push(theme);
-            sessionStorage.setItem("themes", JSON.stringify(parsedThemes))
+            localStorage.setItem("themes", JSON.stringify(parsedThemes))
         } else {
-            sessionStorage.setItem("themes", JSON.stringify([theme]));
+            localStorage.setItem("themes", JSON.stringify([theme]));
         }
     }
     
@@ -371,7 +370,7 @@ function editTheme() {
 }
 
 function delTheme() {
-    let themes = sessionStorage.getItem("themes");
+    let themes = localStorage.getItem("themes");
     let toDelete = document.getElementById('theme-select').value;
     var toDelName = JSON.parse(toDelete.replaceAll("\'", "\""))[0];
 
@@ -381,7 +380,7 @@ function delTheme() {
             theme = JSON.parse(theme.replaceAll("\'", "\""));
             if (theme[0] == toDelName && confirm(`Are you sure you want to delete ${theme[0]}?`)) {
                 parsedThemes.splice(parsedThemes.indexOf(toDelete));
-                sessionStorage.setItem("themes", JSON.stringify(parsedThemes));
+                localStorage.setItem("themes", JSON.stringify(parsedThemes));
                 document.getElementById("apply-changes-theme").click()
             }
         }
