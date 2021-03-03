@@ -50,27 +50,51 @@ body {
     width: 100%
 }
 
-.hero-section {
-    text-align: center;
-    margin-top: 100px;
+.spotlight {
+    background-color: #f8f8f8;
+    height: 500px;
+    margin: 25px;
+    padding: 10px;
+}
+
+.spotlight h1 { text-align: center; }
+.spotlight p { font-size: 1vmax; }
+.spotlight-img { 
+    height: 100%;
     width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    object-fit: contain;
+}
+.spotlight-product--link:hover { background-color: #ffffff; color: #ff6400; border: 1px solid #ff6400; }
+
+.spotlight-product { 
+    background-color: #fcfcfc;
+    display: flex; 
+    justify-content: center;  
+    width: 50%; 
+    margin: 10px auto; 
+    padding: 10px;
+    height: 400px;
 }
 
-.hero-section h1 {
-    font-size: 56pt;
+.spotlight-product--description {
+    background-color: #ffffff;
+    margin: 0 20px;
+    padding: 20px;
+    width: 50%;
+    display: flex; 
+    flex-flow: column; 
+    justify-content: space-between; 
 }
 
-.hero-section h2 {
-    color:#868686;
-    font-weight: 200;
-    margin-top: 20px;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+.spotlight-product--link { 
+    background-color: #ff6400; 
+    color: #ffffff; 
+    border: 1px solid #ffffff; 
+    width: 100%; 
+    padding: 10px;
+    cursor: pointer;
+    transition: 1s ease;
 }
 
-.hero-section a {
-    color:#ff6400;
-}
+
+
