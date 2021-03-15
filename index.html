@@ -2,42 +2,87 @@
 <html>
     <head>
         <title>Jirashi - Home</title>
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="icon" href="assets/JirashiLogo.png">
+        <link rel="stylesheet" href="./css/styles.css">
+        <link rel="icon" href="./assets/JirashiLogo.png">
     </head>
     <body>
         <header>
             <nav class="navbar">
-                <img id="navbar-logo" src="assets/JirashiText.png">
-                <div class="navbar-links">
+                <a href="/"><img id="navbar_logo" src="./assets/JirashiText.png"></a>
+                <div class="navbar_links">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li class="navbar_active"><a href="/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/products/">Products</a></li>
+                        <li><a href="/support/">Support</a></li>
                     </ul>
                 </div>
             </nav>
         </header>
         <main>
+            <div class="hero_section">
+                <h1>Jirashi, free and open-source.</h1>
+            </div>
             <div class="wrapper">
                 <div class="spotlight">
-                    <h1>Textacular v3 Release</h1>
-                    <div class="spotlight-product">
-                        <div class="spotlight-product--description">
+                    <h1 class="section_header">Featured Products</h1>
+                    <div class="spotlight_products">
+                        <div class="spotlight_product">
+                            <h1>Textacular</h1>
                             <p>Textacular is an easy to use, free and open source text editor. With Textacular you can open, edit and save text, HTML, CSS, and JavaScript files.</p>
-                            <div class="spotlight-links">
-                                <a href="https://jirashi.github.io/Textacular" target="_blank"><button class="spotlight-product--link">View Product</button></a>
-                                <a href="https://github.com/Jirashi/Textacular" target="_blank"><button class="spotlight-product--link">View Source Code</button></a>
+                            <img src="./assets/Textacular.png">
+                            <div class="product_buttons">
+                                <a href="https://jirashi.github.io/Textacular" target="_blank"><button>View Product</button></a>
+                                <a href="https://github.com/Jirashi/Textacular" target="_blank"><button>View Source Code</button></a>
                             </div>
                         </div>
-                        <img class="spotlight-img" src="./assets/TextacularIcon.png">
+                        <div class="spotlight_product">
+                            <h1>Servio</h1>
+                            <p>Servio is an All-in-One unit converter. Using Servio's smart formula, you can convert 200+ units in 16 measurements.</p>
+                            <img src="./assets/Servio.png">
+                        
+                            <div class="product_buttons">
+                                <a href="https://jirashi.github.io/Servio" target="_blank"><button>View Product</button></a>
+                                <a href="https://github.com/Jirashi/Servio" target="_blank"><button>View Source Code</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="news">
+                    <h1 class="section_header">News</h1>
+                    <div class="news_headlines">
+                        <div class="news_headline">
+                            <h2>Jirashi Website</h2>
+                            <h4>by: Grqm (3/15/21)</h4>
+                            <p>Hello! As you can see the Jirashi website has had a big improvement, we hope you like it.</p>
+                            <a href="./news/3-15-2021--jirashi-website.html">> Read More</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
         <footer>
-
+            <div class="footer_section">
+                <h3><span style="color: #ff6400;">Ji</span>rashi™</h3>
+            </div>
+            <div class="footer_section">
+                <a href="/"><h3>Home</h3></a>
+                <ul class="footer_links">
+                    <li><a href="/news/"><h5>News</h5></a></li>
+                </ul>
+            </div>
+            <div class="footer_section">
+                <a href="/about/"><h3>About</h3></a>
+            </div>
+            <div class="footer_section">
+                <a href="/products/"><h3>Products</h3></a>
+            </div>
+            <div class="footer_section">
+                <a href="/support/"><h3>Contact</h3></a>
+                <ul class="footer_links">
+                    <li><a href="https://github.com/Jirashi"><h5>GitHub</h5></a></li>
+                </ul>
+            </div>
         </footer>
     </body>
 </html>
